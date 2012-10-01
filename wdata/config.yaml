@@ -1,0 +1,8 @@
+name: weiboshow
+version: 1
+accesskey: w4x1nx50lm
+cron:
+   # - description: cron test
+	 # url: crawl.php?action=crawl
+	 # schedule: every 2 mins
+	 # timezone: Beijing

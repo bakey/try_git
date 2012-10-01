@@ -1,0 +1,69 @@
+1: 把当前的目录下的所有php文件放到web服务器根目录下。
+2: 配置config.php 中的 
+   WEIBO_USER和WEIBO_PWD
+   define('WEIBO_USER' , 'xxx');  //这里填用户名
+   define('WEIBO_PWD' , 'yyy');      //这里填密码
+3：如果用的不是新浪的sae平台，那么还得加上这几个配置 ， 如果用新浪sae，这里可以忽略
+   用户名　 :  SAE_MYSQL_USER
+   密　　码 :  SAE_MYSQL_PASS
+   主库域名 :  SAE_MYSQL_HOST_M
+   端　　口 :  SAE_MYSQL_PORT
+   数据库名 :  SAE_MYSQL_DB
+    就直接define('SAE_MYSQL_USER' , 'xxx');
+   这样就行
+4: define('MAX_FETCH_NUM' , 1000); //这里设置每次最多抓取多少条数据，建议不要设置太多，超出php执行的最大时间数
+   4.1 新增 define('COOKIE_STRING',''); 把您的微博cookie字符串放到这里来就可以了。
+5：建数据库,可以在phpadmind中直接执行以下mysql
+
+   CREATE TABLE `app_key` (
+ `appkey` varchar(256) NOT NULL,
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `status` int(11) NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
+=================================================================
+CREATE TABLE `weibo_public` (
+ `cid` varchar(64) NOT NULL,
+ `geo` varchar(256) NOT NULL,
+ `csource` varchar(256) DEFAULT NULL,
+ `in_reply_to_status_id` varchar(256) DEFAULT NULL,
+ `in_reply_to_user_id` varchar(256) DEFAULT NULL,
+ `mid` varchar(256) NOT NULL DEFAULT '',
+ `reposts_count` int(10) unsigned DEFAULT '0',
+ `comments_count` int(10) unsigned DEFAULT '0',
+ `uid` varchar(32) NOT NULL,
+ `uprovince` varchar(14) NOT NULL,
+ `ucity` varchar(14) NOT NULL,
+ `ulocation` varchar(64) NOT NULL,
+ `ugender` varchar(8) NOT NULL,
+ `followers_count` int(8) NOT NULL,
+ `friends_count` int(8) NOT NULL,
+ `statuses_count` int(8) NOT NULL,
+ `favourites_count` int(8) NOT NULL,
+ `created_at` varchar(128) NOT NULL,
+ `geo_enabled` varchar(12) NOT NULL,
+ `verified` varchar(10) NOT NULL,
+ `online_status` int(4) NOT NULL,
+ `bi_followers_count` int(10) NOT NULL,
+ `insert_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ `glat` varchar(20) NOT NULL,
+ `glon` varchar(20) NOT NULL,
+ cTIMEALL text ,
+ PRIMARY KEY (`mid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8
+=================================================================
+CREATE TABLE `crawle_interval` (
+ `crawel_inter` int(4) NOT NULL,
+ `id` int(10) NOT NULL AUTO_INCREMENT,
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
+insert into  crawle_interval(crawel_inter) values(10);
+
+
+6： 如果是sae平台，修改config.yaml文件做定期抓取，如果是其他平台，修改相应的crontab
+    config.yaml参考目录下的，去掉每行前面的#号
+    schedule: every 2 mins
+     这里可以修改多少分钟抓一次
+    crontab的资料见这里http://baike.baidu.com/view/1229061.htm
+    crontab -e 设置crontab
+    
